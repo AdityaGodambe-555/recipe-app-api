@@ -19,7 +19,11 @@ class CommandTests(SimpleTestCase):
 
     @patch('time.sleep')
     def test_wait_for_db_delay(self, patched_sleep, patched_check):
-        patched_check.side_effect = [Psycop2Error] * 2 + [OperationalError] * 3 + [True]
+        patched_check.side_effect = [
+            Psycop2Error, Psycop2Error,
+            OperationalError, OperationalError, OperationalError,
+            True
+        ]
 
         call_command('wait_for_db')
 
